@@ -45,16 +45,7 @@ This report covers the evidence collected for navigating between pages that use 
 | `/weather` | Interactive Server | Server | Yes |
 | `/about` | Static SSR | Server | No |
 
-The source contains `[PersistentState]` coverage and a JavaScript initializer. The final validation record must also include page-source evidence confirming these comments are emitted:
-
-```text
-<!--Blazor-WebAssembly:
-<!--Blazor-Web-Initializers:
-<!--Blazor-Server-Component-State:
-<!--Blazor-WebAssembly-Component-State:
-```
-
-Metadata-comment source evidence is not currently stored in this evidence folder, so this requirement remains unverified by the report.
+The source contains `[PersistentState]` coverage and a JavaScript initializer. Raw page-source captures are stored for [Home](./console-output/home.html), [Counter](./console-output/counter.html), [Weather](./console-output/weather.html), and [About](./console-output/about.html).
 
 ### Failure: S1-TC01-home-to-weather
 
@@ -79,3 +70,8 @@ The issue is not observed when the explicit `@rendermode InteractiveServer` is r
 - Browsers tested: Chrome and Microsoft Edge
 - Run modes tested: Debug and published Release output
 - Result: Flicker reproduced in both browsers and both run modes
+
+Raw page-source evidence confirms the Web Initializers, Server Component State,
+and WebAssembly Component State comments. The WebAssembly component boundary is
+emitted as `<!--Blazor:{"type":"webassembly"...` rather than the required
+`<!--Blazor-WebAssembly:` prefix, so that specific requirement remains unverified.

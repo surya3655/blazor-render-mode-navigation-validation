@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/" />
+    
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.46ein0sx1k.css" />
+    <link rel="stylesheet" href="app.rvaa7r79a8.css" />
+    <link rel="stylesheet" href="RenderModeNavigationValidation.x0usepoyew.styles.css" />
+    <script type="importmap">{
+  "imports": {
+    "./Components/Layout/NavMenu.razor.js": "./Components/Layout/NavMenu.4213728dye.razor.js",
+    "./Components/Layout/ReconnectModal.razor.js": "./Components/Layout/ReconnectModal.abdmv1u4y3.razor.js",
+    "./RenderModeNavigationValidation.lib.module.js": "./RenderModeNavigationValidation.x8tf2912et.lib.module.js",
+    "./_framework/Microsoft.DotNet.HotReload.WebAssembly.Browser.lib.module.js": "./_framework/Microsoft.DotNet.HotReload.WebAssembly.Browser.99zm1jdh75.lib.module.js",
+    "./_framework/blazor.server.js": "./_framework/blazor.server.02y5zgxqby.js",
+    "./_framework/blazor.web.js": "./_framework/blazor.web.dno4xfe4w5.js",
+    "./_framework/dotnet.native.js": "./_framework/dotnet.native.j4essksm1v.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.ndq107p7qg.js",
+    "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.u7u1yxqnoc.js",
+    "./app.init.js": "./app.init.pcy56obl61.js",
+    "./lib/bootstrap/dist/js/bootstrap.bundle.js": "./lib/bootstrap/dist/js/bootstrap.bundle.6cfz1n2cew.js",
+    "./lib/bootstrap/dist/js/bootstrap.bundle.min.js": "./lib/bootstrap/dist/js/bootstrap.bundle.min.493y06b0oq.js",
+    "./lib/bootstrap/dist/js/bootstrap.esm.min.js": "./lib/bootstrap/dist/js/bootstrap.esm.min.jj8uyg4cgr.js",
+    "./lib/bootstrap/dist/js/bootstrap.esm.js": "./lib/bootstrap/dist/js/bootstrap.esm.vr1egmr9el.js",
+    "./lib/bootstrap/dist/js/bootstrap.min.js": "./lib/bootstrap/dist/js/bootstrap.min.63fj8s7r0e.js",
+    "./lib/bootstrap/dist/js/bootstrap.js": "./lib/bootstrap/dist/js/bootstrap.notf2xhcfb.js",
+    "_framework/resource-collection.js": "./_framework/resource-collection.br0r8.js",
+    "_framework/resource-collection.js.gz": "./_framework/resource-collection.br0r8.js.gz"
+  },
+  "integrity": {
+    "./_framework/resource-collection.br0r8.js": "sha256-/sYaouFmvfRrTbe1tGdccb8WKOst2kP27J+JUhBUKHs=",
+    "./_framework/resource-collection.br0r8.js.gz": "sha256-/sYaouFmvfRrTbe1tGdccb8WKOst2kP27J+JUhBUKHs="
+  }
+}</script>
+    <link rel="icon" type="image/png" href="favicon.png">
+    </head>
+
+<body><div class="page" b-xp690iyf8f><div class="sidebar" b-xp690iyf8f><script type="module" src="Components/Layout/NavMenu.4213728dye.razor.js" b-uca7zvlt30></script>
+
+<div class="top-row ps-3 navbar navbar-dark" b-uca7zvlt30><div class="container-fluid" b-uca7zvlt30><a class="navbar-brand" href b-uca7zvlt30>RenderModeNavigationValidation</a></div></div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" b-uca7zvlt30>
+
+<div id="nav-scrollable" class="nav-scrollable" b-uca7zvlt30><nav class="nav flex-column" b-uca7zvlt30><div class="nav-item px-3" b-uca7zvlt30><a href="" class="nav-link"><span class="bi bi-house-door-fill-nav-menu" aria-hidden="true" b-uca7zvlt30></span> Home
+            </a></div>
+
+        <div class="nav-item px-3" b-uca7zvlt30><a href="counter" class="nav-link"><span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true" b-uca7zvlt30></span> Counter
+            </a></div>
+
+        <div class="nav-item px-3" b-uca7zvlt30><a href="weather" class="nav-link"><span class="bi bi-list-nested-nav-menu" aria-hidden="true" b-uca7zvlt30></span> Weather
+            </a></div>
+
+        <div class="nav-item px-3" b-uca7zvlt30><a href="about" class="nav-link active" aria-current="page"><span class="bi bi-info-circle-fill-nav-menu" aria-hidden="true" b-uca7zvlt30></span> About
+            </a></div></nav></div></div>
+
+    <main b-xp690iyf8f><div class="top-row px-4" b-xp690iyf8f><a href="https://learn.microsoft.com/aspnet/core/" target="_blank" b-xp690iyf8f>About</a></div>
+
+        <article class="content px-4" b-xp690iyf8f><div class="dotnet-version-banner">
+    Running on .NET 11.0.0-preview.7.26381.103 (11.0.0)
+</div>
+
+<h1>About This Validation App</h1>
+
+<p>
+    This app validates a fix for <strong><a href="https://github.com/dotnet/aspnetcore/issues/68516" target="_blank">aspnetcore#68516</a></strong> - 
+    navigating between pages that use different Blazor render modes.
+</p>
+
+<h2>Issue Details</h2>
+
+<p>
+    In .NET 10, Blazor wrote metadata into pages as HTML comments for WebAssembly options, persisted component state, and JavaScript initializers. 
+    These were pulled into Blazor's logical tree during first render, then removed from the DOM. This left stale references.
+</p>
+
+<p>
+    When navigating with enhanced navigation across a render-mode boundary, the error occurred:
+</p>
+
+<pre><code>Cannot read properties of null (reading 'insertBefore')</code></pre>
+
+<p>
+    The visible symptom: address bar changed, but destination page didn't render. Recovery required a full reload or <code>forceLoad: true</code>.
+</p>
+
+<p><strong>Fix in .NET 11:</strong> Metadata comments are now skipped when building the logical tree, preventing stale references.
+</p>
+
+<h2>Validation Coverage</h2>
+
+<p>
+    This app covers the required configurations:
+</p>
+
+<ul><li>Blazor Web App with Static SSR, Interactive Server, and Interactive WebAssembly</li>
+    <li>Pages with and without <code>&lt;PageTitle&gt;</code></li>
+    <li>All render-mode transitions</li>
+    <li>Metadata comments (WebAssembly options, component state, JS initializers)</li></ul>
+
+<p><strong>Expected Behavior:</strong> Clicking navigation links between any pages renders the destination page without errors.
+</p>
+
+<p><strong>Key Scenarios:</strong></p>
+
+<ul><li>WebAssembly to Interactive Server (Home → Weather)</li>
+    <li>Navigation away from WebAssembly page without PageTitle (Counter → Home)</li>
+    <li>WebAssembly to Static SSR after visiting page without PageTitle (Counter → About)</li>
+    <li>All render-mode transitions in both directions</li></ul>
+
+<p class="mt-4">
+    Use the navigation menu to test transitions between pages. Check the browser console for the validation error. 
+    Keep developer tools open to monitor for <code>insertBefore</code> errors.
+</p></article></main></div>
+
+<div id="blazor-error-ui" data-nosnippet b-xp690iyf8f>
+    An unhandled error has occurred.
+    <a href="." class="reload" b-xp690iyf8f>Reload</a>
+    <span class="dismiss" b-xp690iyf8f>🗙</span></div>
+        <blazor-focus-on-navigate selector="h1"></blazor-focus-on-navigate>
+    <script type="module" src="Components/Layout/ReconnectModal.abdmv1u4y3.razor.js" b-zzy25p8gwq></script>
+
+<dialog id="components-reconnect-modal" data-nosnippet b-zzy25p8gwq><div class="components-reconnect-container" b-zzy25p8gwq><div class="components-rejoining-animation" aria-hidden="true" b-zzy25p8gwq><div b-zzy25p8gwq></div>
+            <div b-zzy25p8gwq></div></div>
+        <p class="components-reconnect-first-attempt-visible" b-zzy25p8gwq>
+            Rejoining the server...
+        </p>
+        <p class="components-reconnect-repeated-attempt-visible" b-zzy25p8gwq>
+            Rejoin failed... trying again in <span id="components-seconds-to-next-attempt" b-zzy25p8gwq></span> seconds.
+        </p>
+        <p class="components-reconnect-failed-visible" b-zzy25p8gwq>
+            Failed to rejoin.<br b-zzy25p8gwq>Please retry or reload the page.
+        </p>
+        <button id="components-reconnect-button" class="components-reconnect-failed-visible" b-zzy25p8gwq>
+            Retry
+        </button>
+        <p class="components-pause-visible" b-zzy25p8gwq>
+            The session has been paused by the server.
+        </p>
+        <p class="components-resume-failed-visible" b-zzy25p8gwq>
+            Failed to resume the session.<br b-zzy25p8gwq>Please retry or reload the page.
+        </p>
+        <button id="components-resume-button" class="components-pause-visible components-resume-failed-visible" b-zzy25p8gwq>
+            Resume
+        </button></div></dialog>
+    <script src="_framework/blazor.web.dno4xfe4w5.js"></script></body></html><!--Blazor-Server-Component-State:CfDJ8K5DEq0YMVxPrHGeRA7VbqoUsfDsy5XlMi3oJjwUpSXykaY/aPBzmctbi3nBPhOHhN7NRDHf5XAmplCm66Nxd5Q7tj0T76dkk98cjSzvktX8RVEKj5YHvNiTXfIyyGN7mdFPodCL8895I+LnZ/dQ9fAOh+0Mpytw88JvtriNy+RChOX7qCAtYI95/gqTozhydl/0AJOEu4aXU84+W/88rx469e8Xi5RUKOa1W7VONU9r/plTFPALuwbZXCIykmIdDmmGnD+ilQFPKm8FdkddgOW3pI547GeS527SRZ/AiQTuyE7RFMttHQJ1+haMPvogNT2jvt1tIUfj8w53bfI8lpwZpxVQ0DIhhujKGdomlkVV0qmUDbDi8F6jSLnHdDh9g/XhkGaTy4Js1TM4sC+ppiFzgWZJIIZuashBUvsHHpBhsDN6lCcx72tG1aTEHI0hNd5Bd9iHRhOSf3DY9j+aLBRkN0LdUmO/mKEknusIcvrayKwsxjQxrhl3Xsya1NCuq7v7Jynh76hJu1TZjMeY3dzZV+YCeu7Fz2+1+sQFlrxMEIUiKxjfxSgKo5c9kLHow1apjce/9NmIAwM8Mp7yftgrgTSfFJ/K38AN3EXek8sTngubq26JNYdSf8wSsbl10gdmsWnYsgYkODx7TGrpXa3N7tR15jkVj1FB5CAcY5g57piH6iOaTX44DhAAsa/YVL5I4gSJAh91RfIeMsNfsgyPQICH6/cML3f4E7qB/at0W3wUNDS9FMrfGDuzxMhFofXRCxYev9+roA3NrRi+MOVGRZsz0a8dUjSIC7F5SmA688jSD/XI5kHyfYRQmFYR53f4nmzBznlNoZzktlUM3nwM6awtiaVTnWPDHhBV3gT5fBLRxdV/lKwPz3i8b38IjQF+tucgXRjC9kdzRE10RomWJsh2YBk4RUoAdsXd6J42--><!--Blazor-WebAssembly-Component-State:eyJLOVRlM0xEYlx1MDAyQjZ4ZkpDLzBSVDBCR0xRT3ZwWGlQNEtJU2dBa096RG5za0E9IjoiSWk0dlgyWnlZVzFsZDI5eWF5OXlaWE52ZFhKalpTMWpiMnhzWldOMGFXOXVMbUp5TUhJNExtcHpJZz09IiwiTWljcm9zb2Z0LkFzcE5ldENvcmUuQ29tcG9uZW50cy5JbmZyYXN0cnVjdHVyZS5QZXJzaXN0ZW50U2VydmljZXNSZWdpc3RyeSI6Ilczc2lZWE56WlcxaWJIa2lPaUpOYVdOeWIzTnZablF1UVhOd1RtVjBRMjl5WlM1RGIyMXdiMjVsYm5SekxrVnVaSEJ2YVc1MGN5SXNJbVoxYkd4VWVYQmxUbUZ0WlNJNklrMXBZM0p2YzI5bWRDNUJjM0JPWlhSRGIzSmxMa052YlhCdmJtVnVkSE11VW1WemIzVnlZMlZEYjJ4c1pXTjBhVzl1VUhKdmRtbGtaWElpZlN4N0ltRnpjMlZ0WW14NUlqb2lUV2xqY205emIyWjBMa0Z6Y0U1bGRFTnZjbVV1UTI5dGNHOXVaVzUwY3k1WFpXSWlMQ0ptZFd4c1ZIbHdaVTVoYldVaU9pSk5hV055YjNOdlpuUXVRWE53VG1WMFEyOXlaUzVEYjIxd2IyNWxiblJ6TGtadmNtMXpMa0Z1ZEdsbWIzSm5aWEo1VTNSaGRHVlFjbTkyYVdSbGNpSjlMSHNpWVhOelpXMWliSGtpT2lKTmFXTnliM052Wm5RdVFYTndUbVYwUTI5eVpTNURiMjF3YjI1bGJuUnpMbGRsWWtGemMyVnRZbXg1TGxObGNuWmxjaUlzSW1aMWJHeFVlWEJsVG1GdFpTSTZJazFwWTNKdmMyOW1kQzVCYzNCT1pYUkRiM0psTGtOdmJYQnZibVZ1ZEhNdVEzVnNkSFZ5WlZOMFlYUmxVSEp2ZG1sa1pYSWlmVjA9In0=-->
