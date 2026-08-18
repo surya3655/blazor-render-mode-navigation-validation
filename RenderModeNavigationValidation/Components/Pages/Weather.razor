@@ -1,0 +1,91 @@
+﻿@page "/weather"
+@using System.Runtime.InteropServices
+@using Microsoft.AspNetCore.Components
+@rendermode InteractiveServer
+@attribute [StreamRendering]
+
+<PageTitle>Weather</PageTitle>
+
+<div class="dotnet-version-banner">
+    Running on @RuntimeInformation.FrameworkDescription (@Environment.Version)
+</div>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing data.</p>
+
+@if (Forecasts is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th aria-label="Temperature in Celsius">Temp. (C)</th>
+                <th aria-label="Temperature in Fahrenheit">Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in Forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    [PersistentState]
+    public WeatherValidationState? ValidationState { get; set; }
+
+    public WeatherForecast[]? Forecasts { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Initialize local state for demonstration
+        // This helps ensure metadata is processed during initialization
+        ValidationState ??= new WeatherValidationState
+        {
+            LastVisited = DateTime.Now,
+            VisitCount = (ValidationState?.VisitCount ?? 0) + 1
+        };
+
+        if (Forecasts is null)
+        {
+            // Simulate asynchronous loading to demonstrate streaming rendering
+            await Task.Delay(500);
+            var startDate = DateOnly.FromDateTime(DateTime.Now);
+            var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+            Forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = startDate.AddDays(index),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = summaries[Random.Shared.Next(summaries.Length)]
+            }).ToArray();
+        }
+    }
+
+    public class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string? Summary { get; set; }
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+
+    public class WeatherValidationState
+    {
+        public DateTime LastVisited { get; set; }
+        public int VisitCount { get; set; }
+    }
+}

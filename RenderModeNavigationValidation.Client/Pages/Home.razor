@@ -1,0 +1,31 @@
+@page "/"
+@using System.Runtime.InteropServices
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new Render Mode Navigation Validation app.
+
+<div class="dotnet-version-banner">
+    Running on @RuntimeInformation.FrameworkDescription (@Environment.Version)
+</div>
+
+<p class="mt-3">
+    <strong>Scenario:</strong> This app validates navigating between pages with different Blazor render modes.
+</p>
+
+<ul class="mt-3">
+    <li><strong>Home (/):</strong> Interactive WebAssembly with PageTitle</li>
+    <li><strong>Counter (/counter):</strong> Interactive WebAssembly without PageTitle</li>
+    <li><strong>Weather (/weather):</strong> Interactive Server with PageTitle</li>
+    <li><strong>About (/about):</strong> Static SSR without PageTitle</li>
+</ul>
+
+@code {
+    // WebAssembly pages don't support [PersistentState]
+    // Persistent state is demonstrated on the Server-rendered Weather page
+}
+
+

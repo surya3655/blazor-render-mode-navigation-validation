@@ -1,0 +1,67 @@
+@page "/about"
+@using System.Runtime.InteropServices
+
+<div class="dotnet-version-banner">
+    Running on @RuntimeInformation.FrameworkDescription (@Environment.Version)
+</div>
+
+<h1>About This Validation App</h1>
+
+<p>
+    This app validates a fix for <strong><a href="https://github.com/dotnet/aspnetcore/issues/68516" target="_blank">aspnetcore#68516</a></strong> - 
+    navigating between pages that use different Blazor render modes.
+</p>
+
+<h2>Issue Details</h2>
+
+<p>
+    In .NET 10, Blazor wrote metadata into pages as HTML comments for WebAssembly options, persisted component state, and JavaScript initializers. 
+    These were pulled into Blazor's logical tree during first render, then removed from the DOM. This left stale references.
+</p>
+
+<p>
+    When navigating with enhanced navigation across a render-mode boundary, the error occurred:
+</p>
+
+<pre><code>Cannot read properties of null (reading 'insertBefore')</code></pre>
+
+<p>
+    The visible symptom: address bar changed, but destination page didn't render. Recovery required a full reload or <code>forceLoad: true</code>.
+</p>
+
+<p>
+    <strong>Fix in .NET 11:</strong> Metadata comments are now skipped when building the logical tree, preventing stale references.
+</p>
+
+<h2>Validation Coverage</h2>
+
+<p>
+    This app covers the required configurations:
+</p>
+
+<ul>
+    <li>Blazor Web App with Static SSR, Interactive Server, and Interactive WebAssembly</li>
+    <li>Pages with and without <code>&lt;PageTitle&gt;</code></li>
+    <li>All render-mode transitions</li>
+    <li>Metadata comments (WebAssembly options, component state, JS initializers)</li>
+</ul>
+
+<p>
+    <strong>Expected Behavior:</strong> Clicking navigation links between any pages renders the destination page without errors.
+</p>
+
+<p>
+    <strong>Key Scenarios:</strong>
+</p>
+
+<ul>
+    <li>WebAssembly to Interactive Server (Home → Weather)</li>
+    <li>Navigation away from WebAssembly page without PageTitle (Counter → Home)</li>
+    <li>WebAssembly to Static SSR after visiting page without PageTitle (Counter → About)</li>
+    <li>All render-mode transitions in both directions</li>
+</ul>
+
+<p class="mt-4">
+    Use the navigation menu to test transitions between pages. Check the browser console for the validation error. 
+    Keep developer tools open to monitor for <code>insertBefore</code> errors.
+</p>
