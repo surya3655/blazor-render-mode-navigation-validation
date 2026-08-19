@@ -36,6 +36,25 @@ This report covers the evidence collected for navigating between pages that use 
 | S6 | TC-S6-03 | Type `/about` | [View](./screenshots/Debug/S6-TC03-direct-about.png) | Pass | [View](./screenshots/Publish/S6-TC03-direct-about.png) | Pass |
 | S7 | TC-S7-01 | Navigate all routes five times | [Video](./videos/S62-TC01-repeated-navigation-stress-test.png.mp4) | Pass | [Video](./videos/S62-TC01-repeated-navigation-stress-test-release.mp4) | Pass |
 
+### An existing .NET 10 app upgraded to .NET 11
+
+This scenario validates cloning an existing available Blazor .NET 10 sample and upgrading it to .NET 11.
+
+**Evidence video:** [existing10-upgrade-to-11](./videos/existing10-upgrade-to-11.mp4)
+
+**Result:** Pass
+
+**Steps followed:**
+1. Cloned the existing available Blazor .NET 10 sample.
+2. Updated the project target framework from .NET 10 to .NET 11.
+3. Restored and built the upgraded solution.
+4. Ran the upgraded .NET 11 app.
+5. Re-tested the render-mode navigation scenarios.
+
+**Notes:**
+- The upgraded app successfully ran on .NET 11.
+- Navigation completed successfully except for the already documented Weather page flicker behavior.
+
 ## Route and Metadata Setup
 
 | Route | Render mode | Project | Page title |
